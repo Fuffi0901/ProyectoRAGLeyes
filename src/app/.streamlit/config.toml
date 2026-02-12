@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#D4AF37"          # Dorado para resaltar lo importante
+backgroundColor = "#EFEBE9"       # Beige/Beige claro para el fondo
+textColor = "#3E2723"             # Marrón oscuro casi negro para leer bien
+secondaryBackgroundColor = "#D7CCC8" # Marrón grisáceo suave para widgets
+font = "serif"
