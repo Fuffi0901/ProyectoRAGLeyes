@@ -74,8 +74,6 @@ ProyectoRag
 
 2. Instalación
     Bash
-    git clone https://github.com/tu-usuario/legalmind-rag.git
-    cd legalmind-rag
     pip install -r requirements.txt
 
 -------------------------------------------------------------------------------------------------------------------
