@@ -46,20 +46,22 @@ ProyectoRag
 │   └── utils.py        # Funciones auxiliares
 ├── requirements.txt
 └── .env                # Variables de entorno (API Keys)
+```
+
 
 ## ⚙️ Configuración e Instalación
 Requisitos Previos
 - Python 3.10 + Claves de API para Google Gemini y Groq.
 
 Instalación
-# Clonar el repositorio
+## Clonar el repositorio
 git clone https://github.com/Fuffi0901/ProyectoRAGLeyes.git
 cd ProyectoRAGLeyes
 
-# Instalar dependencias
+## Instalar dependencias
 pip install -r requirements.txt
 
-📖 Guía de Uso
+## 📖 Guía de Uso
 Paso 1: Ingesta de Datos
     Ejecuta el script para procesar leyes y evidencias. Gemini analizará las imágenes (OCR) y las categorizará.
     Bash
@@ -72,7 +74,7 @@ Paso 3: Lanzar la Interfaz
     Bash
     streamlit run app/RagStreamlit.py
 
-🔄 Lógica de la RAG Multimodal
+## 🔄 Lógica de la RAG Multimodal
 El sistema sigue un flujo de razonamiento cíclico para asegurar la precisión:
 Pregunta: Recepción vía texto o archivos.
 Categorización: Clasificación automática del dominio legal.
@@ -82,19 +84,19 @@ Re-ranker: Evaluación con Cross-Encoder para eliminar ruido.
 Análisis Gemini: Integración de pruebas visuales/escaneadas.
 Respuesta: Generación fundamentada con soporte de audio.
 
-📊 Reporte de Calidad (RAGAS)
+## 📊 Reporte de Calidad (RAGAS)
 Con Ground Truth ManualFidelidad (Anti-Alucinación): 57.9%
 Relevancia de Respuesta: 3.26 / 5.0
 Exactitud (vs Ground Truth): 3.66 / 5.0
 Context Recall (Chunks): 23.7%
 
-🏆 Comparativa de Estrategias de Chunking
+## 🏆 Comparativa de Estrategias de Chunking
 Modelo: intfloat/multilingual-e5-small (Recomendado)
 Configuración,Hit Rate @5,MRR,Latencia Media
 "v1 (400 size, 50 overlap)",94.7%,0.742,24.38 ms
 "v2 (800 size, 100 overlap)",13.2%,0.32,22.90 ms
 "v3 (950 size, 150 overlap)",6.2%,0.05,21.95 ms
 
-🛡️ Notas de Implementación
+## 🛡️ Notas de Implementación
 Seguridad: El sistema incluye reglas críticas para prevenir comandos de jailbreak y asegurar que el modelo no revele sus instrucciones internas (System Prompt).
 Reranking: Se utiliza BAAI/bge-reranker-v2-m3 para garantizar que el contexto inyectado sea el más pertinente.
