@@ -1,14 +1,10 @@
-##########################################################
 ## ⚖️ Asistente Legal AI: Multimodal RAG con LangGraph
-##########################################################
 
 - Sistema avanzado de asistencia legal capaz de procesar documentos PDF y evidencia visual (imágenes) utilizando una arquitectura de Grafo de Estados y modelos de lenguaje de última generación.
 
 ---------------------------------------------------------------------------------------------------------------------
 
-#################################
 ## Características Principales
-#################################
 
 - Procesamiento Multimodal: Análisis de imágenes de evidencia y documentos PDF mediante Gemini 2.0 Flash.
 
@@ -26,9 +22,7 @@
 
 -------------------------------------------------------------------------------------------------------------------
 
-######################
 ## Stack Tecnológico
-######################
 
 - LLMs: Google Gemini (Visión), Groq/Llama 3 (Premium).
 
@@ -46,46 +40,42 @@
 ## 📁 Estructura del Proyecto
 ################################
 
-ProyectoRag
-├── chroma_db/
-├── data/
-│   ├── Pdfs/               # Documentos legales para indexar
-│   └── Img/ 
-├──api/
-|   └── backend.py          # API FastAPI y lógica del Grafo de Estados
-├──app/
-|   ├──.streamlit/
-|   └── RagStreamlit.py     # Interfaz de usuario
-├── src/
-│   ├── cargar_pdfs.py      # Pipeline de ingesta y análisis visual con Gemini  
-│   └── utils.py 
-├── requirements.txt
-└── .env                # Variables de entorno
+ProyectoRag\n
+├── chroma_db/\n
+├── data/\n
+│   ├── Pdfs/               # Documentos legales para indexar\n
+│   └── Img/ \n
+├──api/ \n
+|   └── backend.py          # API FastAPI y lógica del Grafo de Estados \n
+├──app/ \n
+|   ├──.streamlit/ \n
+|   └── RagStreamlit.py     # Interfaz de usuario \n
+├── src/ \n
+│   ├── cargar_pdfs.py      # Pipeline de ingesta y análisis visual con Gemini  \n
+│   └── utils.py \n
+├── requirements.txt\n
+└── .env                # Variables de entorno\n
 
 -------------------------------------------------------------------------------------------------------------------
 
-#################################
 ## Configuración e Instalación
-#################################
 
-1. Requisitos Previos
-    Python 3.10+
-    Claves de API para Google Gemini y Groq.
+1. Requisitos Previos\n
+    Python 3.10+\n
+    Claves de API para Google Gemini y Groq.\n
 
-2. Instalación
-    Bash
-    pip install -r requirements.txt
+2. Instalación\n
+    Bash\n
+    pip install -r requirements.txt\n
 
 -------------------------------------------------------------------------------------------------------------------
 
-#################
 ## Guía de Uso
-#################
 
-- Paso 1: Ingesta de Datos
-    Ejecuta el script para procesar tus leyes y evidencias. Gemini analizará las imágenes para extraer texto (OCR) y categorizarlas legalmente.
-    Bash
-    python cargar_pdfs.py
+- Paso 1: Ingesta de Datos\n
+    Ejecuta el script para procesar tus leyes y evidencias. Gemini analizará las imágenes para extraer texto (OCR) y categorizarlas legalmente.\n
+    Bash\n
+    python cargar_pdfs.py\n
 
 - Paso 2: Iniciar el Backend
     La API gestiona el flujo de razonamiento y la búsqueda en la base de datos.
