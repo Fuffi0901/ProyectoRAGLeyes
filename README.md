@@ -1,164 +1,100 @@
-## ⚖️ Asistente Legal AI: Multimodal RAG con LangGraph
+# ⚖️ Asistente Legal AI: Multimodal RAG con LangGraph
 
-- Sistema avanzado de asistencia legal capaz de procesar documentos PDF y evidencia visual (imágenes) utilizando una arquitectura de Grafo de Estados y modelos de lenguaje de última generación.
+Sistema avanzado de asistencia legal capaz de procesar documentos PDF y evidencia visual (imágenes) utilizando una arquitectura de **Grafo de Estados** y modelos de lenguaje de última generación.
 
----------------------------------------------------------------------------------------------------------------------
+---
 
-## Características Principales
+## 🚀 Características Principales
 
-- Procesamiento Multimodal: Análisis de imágenes de evidencia y documentos PDF mediante Gemini 2.0 Flash.
+* **🖼️ Procesamiento Multimodal:** Análisis de imágenes de evidencia y documentos PDF mediante **Gemini 2.0 Flash**.
+* **🧠 Arquitectura de Grafo (LangGraph):** Implementa un flujo de trabajo inteligente que incluye:
+    * **Router:** Clasifica la consulta en categorías legales (Penal, Civil, etc.).
+    * **Rewriter:** Optimiza la pregunta del usuario para mejorar la búsqueda vectorial.
+    * **Ranker:** Re-rankeo de resultados con Cross-Encoder (**BGE-Reranker**).
+* **📑 Ingesta Jerárquica:** Sistema de *Chunks Padre-Hijo* para mantener el contexto global sin perder precisión semántica.
+* **💻 Interfaz Completa:** UI moderna en **Streamlit** con soporte para Texto-a-Voz (TTS) y visualización de evidencia integrada.
 
-- Arquitectura de Grafo (LangGraph): Implementa un flujo de trabajo inteligente:
+---
 
-- Router: Clasifica la consulta en categorías legales.
+## 🛠️ Stack Tecnológico
 
-- Rewriter: Optimiza la pregunta del usuario para búsqueda vectorial.
+| Componente | Tecnología |
+| :--- | :--- |
+| **LLMs** | Google Gemini (Visión), Groq/Llama 3 |
+| **Embeddings** | `intfloat/multilingual-e5-small` |
+| **Vector DB** | ChromaDB (Persistente) |
+| **Orquestación** | LangGraph & LangChain |
+| **Frontend** | Streamlit |
 
-- Ranker: Re-rankeo de resultados con Cross-Encoder (BGE-Reranker).
+---
 
-- Ingesta Jerárquica: Sistema de Chunks Padre-Hijo para mantener el contexto global sin perder precisión semántica.
-
-- Interfaz Completa: UI en Streamlit con soporte para Texto-a-Voz (TTS) y Evidencia Visual integrada.
-
--------------------------------------------------------------------------------------------------------------------
-
-## Stack Tecnológico
-
-- LLMs: Google Gemini (Visión), Groq/Llama 3 (Premium).
-
-- Embeddings: intfloat/multilingual-e5-small.
-
-- Base de Datos Vectorial: ChromaDB (Persistente).
-
-- Orquestación: LangGraph & LangChain.
-
-- Frontend: Streamlit con componentes personalizados de audio y portapapeles.
-
--------------------------------------------------------------------------------------------------------------------
-
-################################
 ## 📁 Estructura del Proyecto
-################################
 
-ProyectoRag\n
-├── chroma_db/\n
-├── data/\n
-│   ├── Pdfs/               # Documentos legales para indexar\n
-│   └── Img/ \n
-├──api/ \n
-|   └── backend.py          # API FastAPI y lógica del Grafo de Estados \n
-├──app/ \n
-|   ├──.streamlit/ \n
-|   └── RagStreamlit.py     # Interfaz de usuario \n
-├── src/ \n
-│   ├── cargar_pdfs.py      # Pipeline de ingesta y análisis visual con Gemini  \n
-│   └── utils.py \n
-├── requirements.txt\n
-└── .env                # Variables de entorno\n
+```text
+ProyectoRag
+├── chroma_db/          # Base de datos vectorial persistente
+├── data/
+│   ├── Pdfs/           # Documentos legales para indexar
+│   └── Img/            # Evidencia visual
+├── api/
+│   └── backend.py      # API FastAPI y lógica del Grafo de Estados
+├── app/
+│   ├── .streamlit/
+│   └── RagStreamlit.py # Interfaz de usuario Streamlit
+├── src/
+│   ├── cargar_pdfs.py  # Pipeline de ingesta y análisis visual
+│   └── utils.py        # Funciones auxiliares
+├── requirements.txt
+└── .env                # Variables de entorno (API Keys)
 
--------------------------------------------------------------------------------------------------------------------
+## ⚙️ Configuración e Instalación
+Requisitos Previos
+- Python 3.10 + Claves de API para Google Gemini y Groq.
 
-## Configuración e Instalación
+Instalación
+# Clonar el repositorio
+git clone https://github.com/Fuffi0901/ProyectoRAGLeyes.git
+cd ProyectoRAGLeyes
 
-1. Requisitos Previos\n
-    Python 3.10+\n
-    Claves de API para Google Gemini y Groq.\n
+# Instalar dependencias
+pip install -r requirements.txt
 
-2. Instalación\n
-    Bash\n
-    pip install -r requirements.txt\n
-
--------------------------------------------------------------------------------------------------------------------
-
-## Guía de Uso
-
-- Paso 1: Ingesta de Datos\n
-    Ejecuta el script para procesar tus leyes y evidencias. Gemini analizará las imágenes para extraer texto (OCR) y categorizarlas legalmente.\n
-    Bash\n
-    python cargar_pdfs.py\n
-
-- Paso 2: Iniciar el Backend
-    La API gestiona el flujo de razonamiento y la búsqueda en la base de datos.
+📖 Guía de Uso
+Paso 1: Ingesta de Datos
+    Ejecuta el script para procesar leyes y evidencias. Gemini analizará las imágenes (OCR) y las categorizará.
+    Bash
+    python src/cargar_pdfs.py
+Paso 2: Iniciar el Backend
+    La API gestiona el flujo de razonamiento y la búsqueda.
     Bash
     uvicorn api.backend:app --reload --port 8000
-
-- Paso 3: Lanzar la Interfaz
+Paso 3: Lanzar la Interfaz
     Bash
-    streamlit run app/streamlit_app.py
+    streamlit run app/RagStreamlit.py
 
--------------------------------------------------------------------------------------------------------------------
+🔄 Lógica de la RAG Multimodal
+El sistema sigue un flujo de razonamiento cíclico para asegurar la precisión:
+Pregunta: Recepción vía texto o archivos.
+Categorización: Clasificación automática del dominio legal.
+Query Rewriting: Transformación a consulta técnica optimizada.
+Búsqueda (Top 10): Recuperación semántica en ChromaDB.
+Re-ranker: Evaluación con Cross-Encoder para eliminar ruido.
+Análisis Gemini: Integración de pruebas visuales/escaneadas.
+Respuesta: Generación fundamentada con soporte de audio.
 
-################################
-## Lógica del Grafo (Backend)
-################################
+📊 Reporte de Calidad (RAGAS)
+Con Ground Truth ManualFidelidad (Anti-Alucinación): 57.9%
+Relevancia de Respuesta: 3.26 / 5.0
+Exactitud (vs Ground Truth): 3.66 / 5.0
+Context Recall (Chunks): 23.7%
 
-- El sistema no solo busca texto; razona sobre la mejor forma de obtenerlo:
+🏆 Comparativa de Estrategias de Chunking
+Modelo: intfloat/multilingual-e5-small (Recomendado)
+Configuración,Hit Rate @5,MRR,Latencia Media
+"v1 (400 size, 50 overlap)",94.7%,0.742,24.38 ms
+"v2 (800 size, 100 overlap)",13.2%,0.32,22.90 ms
+"v3 (950 size, 150 overlap)",6.2%,0.05,21.95 ms
 
-- Clasificación: Detecta si la duda es Penal, Civil, etc.
-
-- Re-Ranking: Tras la búsqueda inicial, el modelo BAAI/bge-reranker-v2-m3 evalúa qué fragmentos son realmente relevantes para la pregunta.
-
-- Inyección Visual: Si se detecta una imagen en la base de datos con alta relevancia, se inyecta como contexto visual para que el LLM la describa en su respuesta.
-
--------------------------------------------------------------------------------------------------------------------
-
-#################################
-## Lógica de la RAG Multimodal
-#################################
-
-Pregunta -> Categorizar -> Query Rewriting -> Embeddings (top 10) - > Cross-Encoder (Re-ranker) -> Analizar Gemini -> Respuesta
-
-1-Pregunta: Recepción de inputs vía texto, voz o archivos (PDF/Imagen).
-
-2-Categorización: Clasificación automática mediante LLM para filtrar el dominio legal específico.
-
-3-Query Rewriting: Transformación de la duda del usuario en una consulta técnica optimizada para recuperar leyes exactas.
-
-4-Embeddings (Top 10): Búsqueda semántica en ChromaDB utilizando el modelo multilingual-e5-small.
-
-5-Cross-Encoder (Re-ranker): Re-evaluación de los resultados con un modelo ms-marco-MiniLM para eliminar ruido y asegurar la máxima relevancia.
-
-6-Analizar Gemini: Procesamiento multimodal (Vision) para integrar pruebas visuales o documentos escaneados en la respuesta.
-
-7-Respuesta: Generación final esquemática, fundamentada en las fuentes recuperadas y con soporte de audio (TTS).
-
-
-##########################################################
-##  REPORTE DE CALIDAD RAGAS (Con Ground Truth Manual)
-##########################################################
-
- - FIDELIDAD (No Alucinacion):    57.9%
- - RELEVANCIA (Calidad Resp.):    3.26 / 5.0
- - EXACTITUD (vs Ground Truth):   3.66 / 5.0
- - CONTEXT RECALL (Chunks):       23.7%
-
-=========================================================================
-🏆 RESULTADOS FINALES: COMPARATIVA DE ESTRATEGIAS DE CHUNKING
-=========================================================================
-## Modelo : all-MiniLM-L6-v2
-|       Configuración        |  Hit Rate @5  |  MRR  |  Latencia Media  |
-|:---------------------------|:--------------|------:|:-----------------|
-| v1 (size:400, overlap:50)  | 23.7%         | 0.45  | 25.67 ms
-| v3 (size:800, overlap:100) | 2.6%          | 0.007 | 23.77 ms         |
-| v3 (size:950, overlap:150) | 2.6%          | 0.007 | 21.57 ms         |
-=========================================================================
-## Modelo : BAAI/bge-small-en-v1
-|       Configuración        |  Hit Rate @5  |  MRR  |  Latencia Media  |
-|:---------------------------|:--------------|------:|:-----------------|
-| v1 (size:400, overlap:50)  | 5.3%          | 0.014 | 33.70 ms         |
-| v2 (size:800, overlap:100) | 0.0%          | 0     | 32.80 ms         |
-| v3 (size:950, overlap:150) | 2.6%          | 0.007 | 33.27 ms         |
-=========================================================================
-## Modelo : intfloat/multilingual-e5-small
-|       Configuración        |  Hit Rate @5  |  MRR  |  Latencia Media  |
-|:---------------------------|:--------------|------:|:-----------------|
-| v1 (size:400, overlap:50)  | 94.7%         | 0.742 | 24.38 ms         |
-| v2 (size:800, overlap:100) | 13.2%         | 0.32  | 22.90 ms         |
-| v3 (size:950, overlap:150) | 6.2%          | 0.05  | 21.95 ms         |
-=========================================================================
-
-#############################
-## Notas de Implementación
-#############################
-
-Seguridad: El sistema incluye reglas críticas para prevenir comandos de jailbreak y evitar que el modelo revele sus instrucciones internas.
+🛡️ Notas de Implementación
+Seguridad: El sistema incluye reglas críticas para prevenir comandos de jailbreak y asegurar que el modelo no revele sus instrucciones internas (System Prompt).
+Reranking: Se utiliza BAAI/bge-reranker-v2-m3 para garantizar que el contexto inyectado sea el más pertinente.
